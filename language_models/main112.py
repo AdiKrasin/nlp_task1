@@ -9,7 +9,8 @@ if __name__ == "__main__":
     GD = GatherDataHandler(DATA_SET_PATH, UNPACK_PATH)
     GD.extract_all()
     GS = GatherStatisticHandler()
-    for file_name in files:
-        result = GS.run(file_name)
-        print("\nfor the following file name: {}\n these are the results:\n {}\n".format(file_name, result))
+    # TODO CHECK IF N IS SOMETHING I NEED TO GET AS USER INPUT
+    N = input("Please provide me with a number as input: ")
+    result = GS.run(files, int(N))
+    print("\nthese are the results:\n {}\n".format(result))
     GD.clean()
