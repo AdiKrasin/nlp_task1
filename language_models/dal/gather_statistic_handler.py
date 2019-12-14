@@ -1,21 +1,19 @@
 from nltk.tokenize import RegexpTokenizer
 import collections
 
-DATA_FOLDER_PATH =\
-    "C:\\Users\\adikr\\Desktop\\nlp_task1\\language_models\\dal\\data_set_unpacked\\simple-examples\\data\\"
-
 
 class GatherStatisticHandler:
 
-    def __init__(self):
+    def __init__(self, unpacked_path):
         self.tokenizer = RegexpTokenizer(r'\'*\w+\'*')
         self.result = dict()
         self.types_in_dev_data = dict()
         self.types_in_training_data = dict()
+        self.data_folder_path = unpacked_path + "\\simple-examples\\data\\"
 
     def calc_number_of_types_in_dev_not_in_train(self):
         counter = 0
-        for word in set(self.types_in_dev_data.elements()):
+        for word in set(list(self.types_in_dev_data.elements())):
             if word not in self.types_in_training_data:
                 counter += self.types_in_dev_data[word]
             elif self.types_in_dev_data[word] > self.types_in_training_data[word]:
@@ -24,7 +22,7 @@ class GatherStatisticHandler:
 
     def run(self, files, n):
         for file_name in files:
-            with open(DATA_FOLDER_PATH+file_name, "r") as file:
+            with open(self.data_folder_path+file_name, "r") as file:
                 content = file.read().replace('\n', '')
                 # TODO CHECK IF THE TESTS ARE FRONTAL BECAUSE IT'S NOT CLEAR WHAT SHOULD BE THE OUTPUT'S STRUCTURE HERE
                 # TODO WRITE THIS - COMPUTE ALL STAGE AND RETURN THE RESULT WITHIN THE RESULT DICT

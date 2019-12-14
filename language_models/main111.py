@@ -1,9 +1,12 @@
 # import nltk
 from language_models.dal.gather_data_handler import GatherDataHandler
 from language_models.dal.data_cleaner_handler import DataCleanerHandler
+import os
 
-DATA_SET_PATH = "C:\\Users\\adikr\\Desktop\\nlp_task1\\language_models\\dal\\data_set\\simple-examples.tgz"
-UNPACK_PATH = "C:\\Users\\adikr\\Desktop\\nlp_task1\\language_models\\dal\\data_set_unpacked"
+cwd = os.getcwd()
+
+DATA_SET_PATH = cwd + "\\dal\\data_set\\simple-examples.tgz"
+UNPACK_PATH = cwd + "\\dal\\data_set_unpacked"
 
 # TODO CREATE THIS IN THE REQUESTED NAMES
 
