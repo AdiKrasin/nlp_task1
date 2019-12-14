@@ -29,6 +29,7 @@ def ptb_preprocess(filenames, top=10000):
     print(clean_data)
 
 
-# TODO DELETE THIS WHEN FINISH TESTING
+# TODO ADD RELEVANT PARAMS HERE FOR TESTING
+# for testing purpose
 if __name__ == "__main__":
     ptb_preprocess("")
