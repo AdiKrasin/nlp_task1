@@ -24,12 +24,11 @@ class DataCleanerHandler:
                 clean_data = clean_data + word + " "
         clean_data = clean_data[:-1]
         clean_data_to_return = ""
-        # TODO NEED TO REMOVE THE SPACE_ IN THE END OF EACH LINE: i think letter might be only \ and then only n
         for letter in clean_data:
             if letter == "\n":
-                clean_data_to_return = clean_data_to_return + "\n"
+                clean_data_to_return = clean_data_to_return[:-3] + "\n"
             elif letter == " ":
-                clean_data_to_return = clean_data_to_return + " _ "
+                clean_data_to_return = clean_data_to_return + "_ "
             else:
                 clean_data_to_return = clean_data_to_return + letter + " "
         clean_data_to_return = clean_data_to_return[:-1]
