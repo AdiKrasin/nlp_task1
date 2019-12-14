@@ -9,7 +9,7 @@ UNPACK_PATH = cwd + "\\dal\\data_set_unpacked"
 files = ["ptb.test.txt", "ptb.train.txt", "ptb.valid.txt"]
 
 if __name__ == "__main__":
-    GD = GatherDataHandler(DATA_SET_PATH, UNPACK_PATH)
+    GD = GatherDataHandler(DATA_SET_PATH, UNPACK_PATH, 10000)
     GD.extract_all()
     GS = GatherStatisticHandler(UNPACK_PATH)
     # TODO CHECK IF N IS SOMETHING I NEED TO GET AS USER INPUT

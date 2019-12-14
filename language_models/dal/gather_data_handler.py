@@ -5,7 +5,8 @@ from nltk.tokenize import RegexpTokenizer
 
 class GatherDataHandler:
 
-    def __init__(self, path_to_data_set, path_to_unpack, url=None):
+    def __init__(self, path_to_data_set, path_to_unpack, top, url=None):
+        self.top = top
         self.path_to_data_set = path_to_data_set
         self.path_to_unpack = path_to_unpack
         if url is not None:
