@@ -23,14 +23,11 @@ class GatherStatisticHandler:
     def run(self, files, n):
         for file_name in files:
             with open(self.data_folder_path+file_name, "r") as file:
-                content = file.read().replace('\n', '')
-                # TODO CHECK IF THE TESTS ARE FRONTAL BECAUSE IT'S NOT CLEAR WHAT SHOULD BE THE OUTPUT'S STRUCTURE HERE
-                tokens = self.tokenizer.tokenize(content)
+                content_as_string = file.read().replace('\n', '')
+                content = content_as_string.split()
+                tokens = self.tokenizer.tokenize(content_as_string)
                 self.result['total_number_of_tokens '+file_name] = len(tokens)
-                self.result['total_number_of_characters '+file_name] = len(content)
-                # TODO CHECK WITH ELHADAD HOW IS IT POSSIBLE HERE THAT THE INPUT FILE IS ALREADY PROCESSED,
-                #  MEANING EVERY WORD THAT IS NOT A PART OF THE 10K MOST FREQUENT WORD IS ALREADY <unk> AND EVERY
-                #  NUMBER IS ALREADY N
+                self.result['total_number_of_characters '+file_name] = len(content_as_string)
                 self.result['total_number_of_distinct_words '+file_name] = \
                     len(set(list(collections.Counter(content).elements())))
                 collection_without_unk_and_n = collections.Counter(content)
@@ -54,21 +51,20 @@ class GatherStatisticHandler:
                 n_gram_value = [2, 3, 4]
                 for value in n_gram_value:
                     n_grams = set()
-                    split_content = content.split()
-                    for index in range(len(split_content)-(value-1)):
+                    for index in range(len(content)-(value-1)):
                         element = ()
                         for index2 in range(value):
-                            element = element + (split_content[index+index2],)
+                            element = element + (content[index+index2],)
                         n_grams.add(element)
                     self.result['total_number_of_distinct_n_grams_of_words ' + str(value) + " " + file_name] = \
                         len(n_grams)
                 n_gram_value = [2, 3, 4, 5, 6, 7]
                 for value in n_gram_value:
                     n_grams = set()
-                    for index in range(len(content)-(value-1)):
+                    for index in range(len(content_as_string)-(value-1)):
                         element = ""
                         for index2 in range(value):
-                            element = element + content[index+index2]
+                            element = element + content_as_string[index+index2]
                         n_grams.add(element)
                     self.result['total_number_of_distinct_n_grams_of_characters ' + str(value) + " " + file_name] = \
                         len(n_grams)

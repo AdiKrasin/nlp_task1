@@ -12,7 +12,9 @@ def clean_html(html, language):
 
 class GatherDataHandler:
 
-    def __init__(self, top, url=None):
+    def __init__(self, top, url=None, path_to_data_set=None, path_to_unpack=None):
+        self.path_to_data_set = path_to_data_set
+        self.path_to_unpack = path_to_unpack
         self.top = top
         self.is_url = False
         if url is not None:
