@@ -19,3 +19,4 @@ def train_word_lm(data_set, n=2):
 if __name__ == "__main__":
     test_model = train_word_lm(PATH_FOR_TEST, n=4)
     print(test_model.model[('adi', 'krasin', 'is')]['the'])
+

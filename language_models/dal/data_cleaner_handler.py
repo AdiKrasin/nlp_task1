@@ -4,7 +4,9 @@ import string
 class DataCleanerHandler:
 
     def __init__(self, tenk_most_frequent_words, tokens):
-        self.tenk_most_frequent_words = [word.lower() for word in tenk_most_frequent_words]
+        self.tenk_most_frequent_words = [word[0].lower() for word in tenk_most_frequent_words]
+        if "backslashn" not in self.tenk_most_frequent_words:
+            self.tenk_most_frequent_words = self.tenk_most_frequent_words[:-1]
         self.tokens = tokens
         self.raw = [word.lower() for word in self.tokens if word not in string.punctuation]
 

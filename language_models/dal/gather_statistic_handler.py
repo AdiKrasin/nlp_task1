@@ -25,7 +25,6 @@ class GatherStatisticHandler:
             with open(self.data_folder_path+file_name, "r") as file:
                 content = file.read().replace('\n', '')
                 # TODO CHECK IF THE TESTS ARE FRONTAL BECAUSE IT'S NOT CLEAR WHAT SHOULD BE THE OUTPUT'S STRUCTURE HERE
-                # TODO WRITE THIS - COMPUTE ALL STAGE AND RETURN THE RESULT WITHIN THE RESULT DICT
                 tokens = self.tokenizer.tokenize(content)
                 self.result['total_number_of_tokens '+file_name] = len(tokens)
                 self.result['total_number_of_characters '+file_name] = len(content)
