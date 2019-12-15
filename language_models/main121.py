@@ -12,11 +12,11 @@ def train_word_lm(data_set, n=2):
         content = file.read().replace('\n', ' ')
     my_model = NgramModel(content, n)
     my_model.run()
-    return my_model
+    return my_model.model
 
 
 # for testing purpose
 if __name__ == "__main__":
     test_model = train_word_lm(PATH_FOR_TEST, n=4)
-    print(test_model.model[('adi', 'krasin', 'is')]['the'])
+    print(test_model[('adi', 'krasin', 'is')]['the'])
 
