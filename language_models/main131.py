@@ -42,7 +42,7 @@ def measure_perplexity(testset, model):
 
 # for testing purpose
 if __name__ == '__main__':
-    test_model = train_word_lm(PATH_FOR_TEST)
+    test_model = train_word_lm(PATH_FOR_TEST, n=3)
     perplexity_res1, infinity1 = measure_perplexity(PATH_FOR_TEST, test_model)
     perplexity_res2, infinity2 = measure_perplexity(PATH_FOR_TEST2, test_model)
     if not infinity1:

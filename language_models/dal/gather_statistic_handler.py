@@ -1,5 +1,6 @@
 from nltk.tokenize import RegexpTokenizer
 import collections
+import math
 
 
 class GatherStatisticHandler:
@@ -46,8 +47,18 @@ class GatherStatisticHandler:
                     self.result['total_number_of_distinct_words '+file_name]
                 if self.types_in_training_data and self.types_in_dev_data:
                     self.result['number_of_types_in_dev_not_in_train'] = self.calc_number_of_types_in_dev_not_in_train()
-                # TODO NEED TO CHECK WHAT DOES IT MEAN
-                # TODO NEED TO CALCULATE THIS NOW: The average number and standard deviation of characters per token
+                number_of_chars = 0
+                for token in tokens:
+                    number_of_chars += len(token)
+                self.result['average_number_of_characters_per_token '+file_name] = number_of_chars / len(tokens)
+                numbers_of_chars_manipulation = []
+                for token in tokens:
+                    numbers_of_chars_manipulation.append(math.pow(len(token)-self.result['average_number_of_characters_per_token '+file_name], 2))
+                number_of_chars = 0
+                for number in numbers_of_chars_manipulation:
+                    number_of_chars += number
+                self.result['standard_deviation_of_characters_per_token '+file_name] = math.sqrt(number_of_chars /
+                                                                                                 len(tokens))
                 n_gram_value = [2, 3, 4]
                 for value in n_gram_value:
                     n_grams = set()
