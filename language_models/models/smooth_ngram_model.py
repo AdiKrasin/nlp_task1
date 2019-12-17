@@ -10,6 +10,15 @@ class SmoothNgramModel(object):
         self.model = defaultdict(lambda: defaultdict(lambda: 1))
         self.n = n
 
+    def generate_next_word(self, ngram):
+        probability = 0
+        word_to_return = False
+        for word in self.model[ngram]:
+            if self.model[ngram][word] > probability:
+                word_to_return = word
+                probability = self.model[ngram][word]
+        return word_to_return
+
     def run(self):
         for gram in ngrams(self.data_set.split(), self.n, pad_right=True, pad_left=True):
             self.model[gram[:-1]][gram[-1]] += 1
