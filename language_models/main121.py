@@ -1,4 +1,5 @@
 from language_models.models.ngram_model import NgramModel
+from language_models.models.smooth_ngram_model import SmoothNgramModel
 import os
 
 cwd = os.getcwd()
@@ -6,17 +7,19 @@ cwd = os.getcwd()
 PATH_FOR_TEST = cwd + "\\dal\\test.txt"
 
 
-def train_word_lm(data_set, n=2):
-    # TODO WRITE THIS IN THE NOTEBOOK - also in the notebook need to answer the question under 1.2.2
+def train_word_lm(data_set, n=2, smooth=False):
     with open(data_set, "r") as file:
         content = file.read().replace('\n', ' ')
-    my_model = NgramModel(content, n)
+    if not smooth:
+        my_model = NgramModel(content, n)
+    else:
+        my_model = SmoothNgramModel(content, n)
     my_model.run()
-    return my_model.model
+    return my_model
 
 
 # for testing purpose
 if __name__ == "__main__":
-    test_model = train_word_lm(PATH_FOR_TEST, n=4)
-    print(test_model[('adi', 'krasin', 'is')]['the'])
+    actual_model = train_word_lm(PATH_FOR_TEST, n=4)
+    print(actual_model.model[('adi', 'krasin', 'is')]['the'])
 
