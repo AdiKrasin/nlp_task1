@@ -20,11 +20,7 @@ if __name__ == '__main__':
     else:
         print("infinity")
     actual_model = train_word_lm(PATH_FOR_TEST, n=3, smooth=True)
-    with open(PATH_FOR_TEST, "r") as file:
-        content = file.read().replace('\n', ' ')
-    perplexity_res3 = actual_model.measure_perplexity(content)
+    perplexity_res3 = actual_model.measure_perplexity(PATH_FOR_TEST)
+    perplexity_res4 = actual_model.measure_perplexity(PATH_FOR_TEST2)
     print(perplexity_res3)
-    with open(PATH_FOR_TEST2, "r") as file:
-        content = file.read().replace('\n', ' ')
-    perplexity_res4 = actual_model.measure_perplexity(content)
     print(perplexity_res4)
