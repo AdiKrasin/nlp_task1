@@ -4,10 +4,10 @@ from collections import defaultdict
 
 class SmoothNgramModel(object):
 
-    def __init__(self, data_set, n):
+    def __init__(self, data_set, n, gamma):
         self.data_set = data_set.split()
         self.model = defaultdict(lambda: defaultdict(lambda: 0.1))
-        self.gamma = 0.01
+        self.gamma = gamma
         self.n = n
 
     def generate_next_word(self, ngram):

@@ -7,13 +7,13 @@ cwd = os.getcwd()
 PATH_FOR_TEST = cwd + "\\dal\\test.txt"
 
 
-def train_word_lm(data_set, n=2, smooth=False):
+def train_word_lm(data_set, n=2, smooth=False, gamma=0.01):
     with open(data_set, "r") as file:
         content = file.read().replace('\n', ' ')
     if not smooth:
         my_model = NgramModel(content, n)
     else:
-        my_model = SmoothNgramModel(content, n)
+        my_model = SmoothNgramModel(content, n, gamma=gamma)
     my_model.run()
     return my_model
 
