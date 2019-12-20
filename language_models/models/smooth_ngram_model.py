@@ -7,6 +7,7 @@ class SmoothNgramModel(object):
     def __init__(self, data_set, n):
         self.data_set = data_set.split()
         self.model = defaultdict(lambda: defaultdict(lambda: 0.1))
+        self.gamma = 0.01
         self.n = n
 
     def generate_next_word(self, ngram):
@@ -21,7 +22,8 @@ class SmoothNgramModel(object):
     def run(self):
         cfd = ConditionalFreqDist((tuple(self.data_set[i: i + self.n - 1]), self.data_set[i + self.n - 1]) for i in
                                   range(len(self.data_set) - self.n + 1))
-        cpd = ConditionalProbDist(cfd, LidstoneProbDist, gamma=0.5)
+        lidstone_estimator = lambda fd: LidstoneProbDist(fd, self.gamma, fd.B() + 1)
+        cpd = ConditionalProbDist(cfd, lidstone_estimator)
         self.model = cpd
 
     def measure_perplexity(self, testset):
