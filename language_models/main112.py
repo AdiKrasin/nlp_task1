@@ -1,6 +1,7 @@
 from language_models.dal.gather_data_handler import GatherDataHandler
 from language_models.dal.gather_statistic_handler import GatherStatisticHandler
 import os
+import json
 
 cwd = os.getcwd()
 
@@ -14,5 +15,5 @@ if __name__ == "__main__":
     GS = GatherStatisticHandler(UNPACK_PATH)
     N = input("Please provide me with a number as input: ")
     result = GS.run(files, int(N))
-    print("\nthese are the results:\n {}\n".format(result))
+    print("\nthese are the results:\n {}\n".format(json.dumps(result, indent=4)))
     GD.clean()

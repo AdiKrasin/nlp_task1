@@ -3,8 +3,8 @@ import os
 import random
 
 cwd = os.getcwd()
-PATH_FOR_TEST = cwd + "\\dal\\test.txt"
-PATH_FOR_TEST2 = cwd + "\\dal\\test2.txt"
+PATH_FOR_TEST = cwd + "\\dal\\random_content.txt"
+PATH_FOR_TEST2 = cwd + "\\dal\\random_content2.txt"
 
 
 def generate(model, seed):

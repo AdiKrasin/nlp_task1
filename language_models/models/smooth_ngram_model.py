@@ -1,13 +1,12 @@
-from nltk import ngrams
+from nltk import ConditionalFreqDist, ConditionalProbDist, LidstoneProbDist
 from collections import defaultdict
 
 
-# TODO - FOR NOW THIS IS THE ADD-K WITH K=1 SMOOTHING (THIS SUCKS - NEED TO MAKE A BETTER SMOOTHING BUT NEED HELP)
 class SmoothNgramModel(object):
 
     def __init__(self, data_set, n):
-        self.data_set = data_set
-        self.model = defaultdict(lambda: defaultdict(lambda: 1))
+        self.data_set = data_set.split()
+        self.model = defaultdict(lambda: defaultdict(lambda: 0.1))
         self.n = n
 
     def generate_next_word(self, ngram):
@@ -20,12 +19,10 @@ class SmoothNgramModel(object):
         return word_to_return
 
     def run(self):
-        for gram in ngrams(self.data_set.split(), self.n, pad_right=True, pad_left=True):
-            self.model[gram[:-1]][gram[-1]] += 1
-        for w1_wn_minus_1 in self.model:
-            total_count = float(sum(self.model[w1_wn_minus_1].values()))
-            for wn in self.model[w1_wn_minus_1]:
-                self.model[w1_wn_minus_1][wn] /= total_count
+        cfd = ConditionalFreqDist((tuple(self.data_set[i: i + self.n - 1]), self.data_set[i + self.n - 1]) for i in
+                                  range(len(self.data_set) - self.n + 1))
+        cpd = ConditionalProbDist(cfd, LidstoneProbDist, gamma=0.5)
+        self.model = cpd
 
     def measure_perplexity(self, testset):
         with open(testset, 'r') as f:
@@ -41,11 +38,14 @@ class SmoothNgramModel(object):
             index += 1
             n += 1
             ngram = ()
+            next_iter = False
             for i in range(look_back_size):
                 if index - i - 1 >= 0:
                     ngram = (testset_content[index - i - 1],) + ngram
                 else:
-                    ngram = (None,) + ngram
-            perplexity = perplexity * (1 / self.model[ngram][word])
+                    next_iter = True
+            if next_iter:
+                continue
+            perplexity = perplexity * (1 / self.model[ngram].prob(word))
         perplexity = pow(perplexity, 1 / float(n))
         return perplexity
