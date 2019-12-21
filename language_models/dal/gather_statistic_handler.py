@@ -5,12 +5,15 @@ import math
 
 class GatherStatisticHandler:
 
-    def __init__(self, unpacked_path):
+    def __init__(self, unpacked_path, cooking=False):
         self.tokenizer = RegexpTokenizer(r'\'*\w+\'*')
         self.result = dict()
         self.types_in_dev_data = dict()
         self.types_in_training_data = dict()
-        self.data_folder_path = unpacked_path + "\\simple-examples\\data\\"
+        if cooking:
+            self.data_folder_path = unpacked_path+"\\"
+        else:
+            self.data_folder_path = unpacked_path + "\\simple-examples\\data\\"
 
     def calc_number_of_types_in_dev_not_in_train(self):
         counter = 0

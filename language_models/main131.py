@@ -1,26 +1,31 @@
 from language_models.main121 import train_word_lm
 import os
+from language_models.dal.gather_data_handler import GatherDataHandler
+import matplotlib.pyplot as plt
 
 cwd = os.getcwd()
-PATH_FOR_TEST = cwd + "\\dal\\test.txt"
-PATH_FOR_TEST2 = cwd + "\\dal\\test2.txt"
+
+DATA_SET_PATH = cwd + "\\dal\\data_set\\simple-examples.tgz"
+UNPACK_PATH = cwd + "\\dal\\data_set_unpacked"
 
 
 # for testing purpose
 if __name__ == '__main__':
-    actual_model = train_word_lm(PATH_FOR_TEST, n=3)
-    perplexity_res1, infinity1 = actual_model.measure_perplexity(PATH_FOR_TEST)
-    perplexity_res2, infinity2 = actual_model.measure_perplexity(PATH_FOR_TEST2)
-    if not infinity1:
-        print(perplexity_res1)
-    else:
-        print("infinity")
-    if not infinity2:
-        print(perplexity_res2)
-    else:
-        print("infinity")
-    actual_model = train_word_lm(PATH_FOR_TEST, n=3, smooth=True)
-    perplexity_res3 = actual_model.measure_perplexity(PATH_FOR_TEST)
-    perplexity_res4 = actual_model.measure_perplexity(PATH_FOR_TEST2)
-    print(perplexity_res3)
-    print(perplexity_res4)
+    ns = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    values = []
+    for n in ns:
+        GD = GatherDataHandler(10000, path_to_data_set=DATA_SET_PATH, path_to_unpack=UNPACK_PATH)
+        GD.extract_all()
+        actual_model = train_word_lm(UNPACK_PATH + "\\simple-examples\\data\\ptb.train.txt", n=n, smooth=True,
+                                     gamma=0.9)
+        perplexity_res = actual_model.measure_perplexity(UNPACK_PATH + "\\simple-examples\\data\\ptb.valid.txt")
+        GD.clean()
+        values.append(perplexity_res)
+        print(str(perplexity_res)+"\n")
+    plt.plot(values, ns, color='green', linestyle='dashed', linewidth=3, marker='o', markerfacecolor='blue',
+             markersize=12)
+    plt.ylabel('ns')
+    plt.xlabel('perplexity')
+    plt.ylim = 20
+    plt.xlim = 95
+    plt.show()

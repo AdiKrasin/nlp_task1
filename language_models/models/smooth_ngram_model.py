@@ -6,17 +6,16 @@ class SmoothNgramModel(object):
 
     def __init__(self, data_set, n, gamma):
         self.data_set = data_set.split()
-        self.model = defaultdict(lambda: defaultdict(lambda: 0.1))
+        self.model = defaultdict(lambda: defaultdict(lambda: 0))
         self.gamma = gamma
         self.n = n
 
     def generate_next_word(self, ngram):
         probability = 0
         word_to_return = False
-        for word in self.model[ngram]:
-            if self.model[ngram][word] > probability:
-                word_to_return = word
-                probability = self.model[ngram][word]
+        for model_ngram in self.model:
+            if model_ngram == ngram:
+                word_to_return = self.model[model_ngram].max()
         return word_to_return
 
     def run(self):
@@ -37,8 +36,9 @@ class SmoothNgramModel(object):
             look_back_size = len(ngram)
             break
         for word in testset_content:
-            index += 1
             n += 1
+        for word in testset_content:
+            index += 1
             ngram = ()
             next_iter = False
             for i in range(look_back_size):
@@ -48,6 +48,5 @@ class SmoothNgramModel(object):
                     next_iter = True
             if next_iter:
                 continue
-            perplexity = perplexity * (1 / self.model[ngram].prob(word))
-        perplexity = pow(perplexity, 1 / float(n))
+            perplexity = perplexity * pow((1 / self.model[ngram].prob(word)), 1 / float(n))
         return perplexity
