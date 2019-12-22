@@ -7,7 +7,6 @@ def OptimizeLS(x, t, M):
     phi = np.zeros((len(x), M+1))
     for n in range(len(x)):
         for m in range(M+1):
-            # TODO I AM NOT SURE THAT THIS IS THE MEANING HERE - NEED TO CHECK WITH ELHADAD
             phi[n][m] = pow(x[n], m)
     wls = np.dot(np.dot(np.linalg.inv(np.dot(phi.T, phi)), phi.T), t)
     return wls
