@@ -41,14 +41,14 @@ def optimizePLS2(xt, tt, xv, tv, M):
     error = False
     for my_lambda in possible_lambdas:
         coefficients_t = optimizePLS(xt, tt, M, my_lambda)
-        approx_values_t = [compute(coefficients, x) for x in xt]
+        approx_values_t = [compute(coefficients_t, x) for x in xt]
         values_t = [f(x) for x in xt]
         coefficients_v = optimizePLS(xv, tv, M, my_lambda)
-        approx_values_v = [compute(coefficients, x) for x in xv]
+        approx_values_v = [compute(coefficients_v, x) for x in xv]
         values_v = [f(x) for x in xv]
         # TODO NEED TO MAKE THESE TWO CALCULATIONS OF THE ERROR
-        first_error =
-        second_error =
+        first_error = 0
+        second_error = 0
         this_iter_error = max(first_error, second_error)
         if error is not False:
             if this_iter_error < error:
