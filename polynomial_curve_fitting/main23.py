@@ -46,9 +46,8 @@ def optimizePLS2(xt, tt, xv, tv, M):
         coefficients_v = optimizePLS(xv, tv, M, my_lambda)
         approx_values_v = [compute(coefficients_v, x) for x in xv]
         values_v = [f(x) for x in xv]
-        # TODO NEED TO MAKE THESE TWO CALCULATIONS OF THE ERROR
-        first_error = 0
-        second_error = 0
+        first_error = 1/len(xt) * (pow(np.sum([pow(values_t[index]-approx_values_t[index], 2) for index in range(len(tt))]), 0.5))
+        second_error = 1/len(xt) * (pow(np.sum([pow(values_v[index]-approx_values_v[index], 2) for index in range(len(tv))]), 0.5))
         this_iter_error = max(first_error, second_error)
         if error is not False:
             if this_iter_error < error:
